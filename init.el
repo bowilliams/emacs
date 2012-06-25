@@ -1,5 +1,10 @@
 ;; emacs configuration
 
+(global-set-key [M-left] 'windmove-left)          ; move to left windnow
+(global-set-key [M-right] 'windmove-right)        ; move to right window
+(global-set-key [M-up] 'windmove-up)              ; move to upper window
+(global-set-key [M-down] 'windmove-down)          ; move to downer window
+
 (push "/usr/bin" exec-path)
 (add-to-list 'load-path "~/.emacs.d")
 
@@ -19,9 +24,9 @@
 (column-number-mode t)
 (set-fringe-style -1)
 (tooltip-mode -1)
-
+(add-to-list 'custom-theme-load-path "~/.emacs.d/themes")
 (set-frame-font "Menlo-12")
-(load-theme 'tango)
+(load-theme 'zenburn)
 
 (defun ruby-mode-hook ()
   (autoload 'ruby-mode "ruby-mode" nil t)
@@ -69,49 +74,27 @@
         (pop-to-buffer (ruby-compilation-do filename command)))
     (ruby-compilation-this-buffer)))
 
-(require 'package)
-(setq package-archives (cons '("tromey" . "http://tromey.com/elpa/") package-archives))
-(package-initialize)
-
-(add-to-list 'load-path "~/.emacs.d/el-get/el-get")
-(require 'el-get)
-
-(setq el-get-sources
-      '((:name ruby-mode 
-               :type elpa
-               :load "ruby-mode.el"
-               :after (lambda () (ruby-mode-hook)))
-        (:name inf-ruby  :type elpa)
-        (:name ruby-compilation :type elpa)
-        (:name css-mode 
-               :type elpa 
-               :after (lambda () (css-mode-hook)))
-        (:name textmate
-               :type git
-               :url "git://github.com/defunkt/textmate.el"
-               :load "textmate.el")
-        (:name rvm
-               :type git
-               :url "http://github.com/djwhitt/rvm.el.git"
-               :load "rvm.el"
-               :compile ("rvm.el")
-               :after (lambda() (rvm-use-default)))
-        (:name rhtml
-               :type git
-               :url "https://github.com/crazycode/rhtml.git"
-               :features rhtml-mode
-               :after (lambda () (rhtml-mode-hook)))
-        (:name yaml-mode 
-               :type git
-               :url "http://github.com/yoshiki/yaml-mode.git"
-               :features yaml-mode
-               :after (lambda () (yaml-mode-hook)))
-	))
-(el-get 'sync)
-
 (add-to-list 'load-path "~/.emacs.d/vendor")
 (require 'deft)
 (setq deft-extension "txt")
-(setq deft-directory "~/Dropbox/deft")
+(setq deft-directory "~/Dropbox/deft/")
 (setq deft-text-mode 'markdown-mode)
 (global-set-key [f8] 'deft)
+
+(require 'php-mode)
+
+(add-to-list 'load-path "~/.emacs.d/smart-tab")
+(require 'smart-tab)
+(global-smart-tab-mode 1)
+(custom-set-variables
+ ;; custom-set-variables was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ '(custom-safe-themes (quote ("9e54a6ac0051987b4296e9276eecc5dfb67fdcd620191ee553f40a9b6d943e78" "419844e5ed7f7ce7fc580adc2864426e30c52e81" "6c8c2387230643dda8c6eebb77b49418b20c4b5e" default))))
+(custom-set-faces
+ ;; custom-set-faces was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ )
